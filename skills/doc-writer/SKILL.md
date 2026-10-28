@@ -4,7 +4,7 @@ description: "Run the doc-writer subagent directly. Updates README, docs and com
 argument-hint: <task>
 disable-model-invocation: true
 context: fork
-agent: doc-writer
+agent: light-subagents:doc-writer
 ---
 
 $ARGUMENTS

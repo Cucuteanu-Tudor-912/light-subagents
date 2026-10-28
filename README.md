@@ -21,9 +21,10 @@ There's no framework, no hooks and no session-start injection. It's one orchestr
 Each agent's system prompt carries best practices for its role. The sources are Google's code review guide, Fowler's *Refactoring*, systematic debugging, unit-testing guidance and Diátaxis.
 
 ```
-agents/<role>.md          native Claude Code subagent definitions
-skills/role-agents/       the orchestrator skill  (/role-agents)
-skills/<role>/            slash-command wrappers  (/investigator, /reviewer, ...)
+.claude-plugin/           plugin + marketplace manifests
+agents/<role>.md          subagent definitions
+skills/role-agents/       the orchestrator skill
+skills/<role>/            slash-command wrappers, one per role
 ```
 
 ### Model tiering
@@ -39,55 +40,45 @@ Agents never run on Opus. Haiku gets only narrow tasks (about 5 files at most, w
 
 ## Install
 
-Copy `agents/` and `skills/` into your user-level `~/.claude` directory (or a project's `.claude/` directory to scope it to one repo).
+In Claude Code:
 
-**macOS / Linux / Git Bash**
-
-```bash
-git clone https://github.com/Cucuteanu-Tudor-912/light-subagents.git
-mkdir -p ~/.claude/agents ~/.claude/skills
-cp light-subagents/agents/*.md ~/.claude/agents/
-cp -r light-subagents/skills/* ~/.claude/skills/
+```
+/plugin marketplace add Cucuteanu-Tudor-912/light-subagents
+/plugin install light-subagents@light-subagents
 ```
 
-**Windows PowerShell**
+Restart Claude Code, then run `/agents`. The seven roles should be listed as `light-subagents:<role>`.
 
-```powershell
-git clone https://github.com/Cucuteanu-Tudor-912/light-subagents.git
-New-Item -ItemType Directory -Force "$HOME\.claude\agents", "$HOME\.claude\skills" | Out-Null
-Copy-Item light-subagents\agents\*.md "$HOME\.claude\agents\"
-Copy-Item -Recurse -Force light-subagents\skills\* "$HOME\.claude\skills\"
-```
-
-Then restart Claude Code. Check with `/agents` (the seven roles should be listed).
-
-To update, `git pull` and copy again. To uninstall, delete the copied files.
+Update with `/plugin marketplace update light-subagents`. Uninstall with `/plugin uninstall light-subagents`.
 
 ## Usage
 
 **Orchestrator mode.** Hand a whole task to the orchestrator:
 
 ```
-/role-agents add rate limiting to the /login endpoint
+/light-subagents:role-agents add rate limiting to the /login endpoint
 ```
 
-The session investigates, plans, dispatches agents in parallel where possible, gates each change through test and review, and verifies before reporting.
+The session investigates, plans, dispatches agents in parallel where possible, gates each change through test and review, and verifies before reporting. It also triggers on phrases like "orchestrate this with role agents".
 
 **Single agent.** Call one role directly:
 
 ```
-/investigator where are JWT tokens validated?
-/reviewer review the staged diff against docs/spec.md
-/bug-fixer tests/test_auth.py::test_expiry fails with KeyError
+/light-subagents:investigator where are JWT tokens validated?
+/light-subagents:reviewer review the staged diff against docs/spec.md
+/light-subagents:bug-fixer tests/test_auth.py::test_expiry fails with KeyError
 ```
 
-You can also @-mention an agent (`@agent-tester ...`) or just ask ("use the reviewer agent on this diff").
+Typing `/investigator` and picking from autocomplete works too. You can also @-mention an agent or just ask ("use the reviewer agent on this diff").
 
 ## Customizing
 
+Fork the repo and add your fork as the marketplace instead.
+
 - **Change a role's default model:** edit `model:` in `agents/<role>.md`.
-- **Add a role:** create `agents/<role>.md` (frontmatter: `name`, `description`, optional `tools`, `model`), and optionally copy a wrapper from `skills/<role>/`.
+- **Add a role:** create `agents/<role>.md` (frontmatter: `name`, `description`, optional `tools`, `model`), and copy a wrapper from `skills/<role>/` with `agent: light-subagents:<role>`.
 - **Tiering rules:** edit `skills/role-agents/SKILL.md`.
+- **Test local changes:** `claude --plugin-dir ./light-subagents`.
 
 ## License
 

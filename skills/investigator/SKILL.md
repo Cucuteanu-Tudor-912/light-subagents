@@ -4,7 +4,7 @@ description: "Run the investigator subagent directly. Read-only codebase investi
 argument-hint: <task>
 disable-model-invocation: true
 context: fork
-agent: investigator
+agent: light-subagents:investigator
 ---
 
 $ARGUMENTS

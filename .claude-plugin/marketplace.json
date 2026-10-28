@@ -1,0 +1,12 @@
+{
+  "name": "light-subagents",
+  "owner": { "name": "Cucuteanu Tudor", "url": "https://github.com/Cucuteanu-Tudor-912" },
+  "plugins": [
+    {
+      "name": "light-subagents",
+      "description": "Lightweight subagent-driven development: the main session orchestrates, Sonnet/Haiku role agents do the work.",
+      "source": "./",
+      "license": "MIT"
+    }
+  ]
+}

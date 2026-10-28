@@ -4,7 +4,7 @@ description: "Run the tester subagent directly. Writes or runs tests for one uni
 argument-hint: <task>
 disable-model-invocation: true
 context: fork
-agent: tester
+agent: light-subagents:tester
 ---
 
 $ARGUMENTS

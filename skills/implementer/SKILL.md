@@ -4,7 +4,7 @@ description: "Run the implementer subagent directly. Implements one well-specifi
 argument-hint: <task>
 disable-model-invocation: true
 context: fork
-agent: implementer
+agent: light-subagents:implementer
 ---
 
 $ARGUMENTS

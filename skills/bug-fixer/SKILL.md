@@ -4,7 +4,7 @@ description: "Run the bug-fixer subagent directly. Reproduces a bug, finds its r
 argument-hint: <task>
 disable-model-invocation: true
 context: fork
-agent: bug-fixer
+agent: light-subagents:bug-fixer
 ---
 
 $ARGUMENTS

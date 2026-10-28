@@ -4,7 +4,7 @@ description: "Run the refactorer subagent directly. Behavior-preserving refactor
 argument-hint: <task>
 disable-model-invocation: true
 context: fork
-agent: refactorer
+agent: light-subagents:refactorer
 ---
 
 $ARGUMENTS

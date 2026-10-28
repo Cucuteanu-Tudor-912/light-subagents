@@ -1,0 +1,10 @@
+{
+  "name": "light-subagents",
+  "description": "Lightweight subagent-driven development: the main session orchestrates, Sonnet/Haiku role agents (investigator, implementer, tester, bug-fixer, reviewer, refactorer, doc-writer) do the work.",
+  "version": "1.0.0",
+  "author": { "name": "Cucuteanu Tudor", "url": "https://github.com/Cucuteanu-Tudor-912" },
+  "homepage": "https://github.com/Cucuteanu-Tudor-912/light-subagents",
+  "repository": "https://github.com/Cucuteanu-Tudor-912/light-subagents",
+  "license": "MIT",
+  "keywords": ["subagents", "orchestration", "haiku", "sonnet", "code-review", "debugging", "testing"]
+}

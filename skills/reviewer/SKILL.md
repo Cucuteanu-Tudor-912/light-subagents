@@ -4,7 +4,7 @@ description: "Run the reviewer subagent directly. Read-only code reviewer. Revie
 argument-hint: <task>
 disable-model-invocation: true
 context: fork
-agent: reviewer
+agent: light-subagents:reviewer
 ---
 
 $ARGUMENTS

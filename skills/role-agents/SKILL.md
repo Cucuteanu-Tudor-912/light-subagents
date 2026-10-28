@@ -28,7 +28,7 @@ This conversation is the **orchestrator**. It plans, dispatches, verifies, and d
 
 ## Roles
 
-Each role is a native subagent in `~/.claude/agents/<role>.md`. Its role best practices, tool limits and report format live in that file's system prompt, so don't repeat them in briefs. Dispatch with `subagent_type="<role>"` and an explicit `model` (rule 3 overrides the file's default).
+Each role is a subagent shipped by this plugin (`agents/<role>.md`). Its role best practices, tool limits and report format live in that file's system prompt, so don't repeat them in briefs. Dispatch with `subagent_type="light-subagents:<role>"` and an explicit `model` (rule 3 overrides the file's default).
 
 | Role (subagent_type) | Default model | Job | Writes |
 |---|---|---|---|
@@ -40,7 +40,7 @@ Each role is a native subagent in `~/.claude/agents/<role>.md`. Its role best pr
 | refactorer | sonnet | Behavior-preserving restructure in small steps | Code |
 | doc-writer | haiku | Update docs/comments for a finished change | Docs only |
 
-To add a role, create a new `~/.claude/agents/<role>.md` with the same shape.
+To add a role, add `agents/<role>.md` to the plugin with the same shape.
 
 ## Brief template
 
@@ -67,11 +67,11 @@ DONE WHEN: <concrete acceptance criteria, e.g. "pytest tests/test_x.py passes">
 ## Example
 
 ```
-Agent(description="Find auth middleware", subagent_type="investigator", model="haiku",
+Agent(description="Find auth middleware", subagent_type="light-subagents:investigator", model="haiku",
       prompt="GOAL: Locate where JWT tokens are validated...")
-Agent(description="Find token tests", subagent_type="investigator", model="haiku", prompt="GOAL: ...")
+Agent(description="Find token tests", subagent_type="light-subagents:investigator", model="haiku", prompt="GOAL: ...")
 # -> then
-Agent(description="Add token expiry check", subagent_type="implementer", model="sonnet",
+Agent(description="Add token expiry check", subagent_type="light-subagents:implementer", model="sonnet",
       prompt="GOAL: ...
 SCOPE: src/auth/jwt.ts only
 DONE WHEN: npm test -- jwt passes")
