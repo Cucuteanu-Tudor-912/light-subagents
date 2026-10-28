@@ -27,6 +27,17 @@ skills/role-agents/       the orchestrator skill
 skills/<role>/            slash-command wrappers, one per role
 ```
 
+### Workflow
+
+1. **Clarify.** Ambiguous requirements get questions before any planning.
+2. **Plan.** Tasks are written to `.light-subagents/plan.md` (git-excluded) as a checklist.
+3. **Branch.** All work happens on a feature branch, never on the default branch.
+4. **Implement, test, review.** Each task goes through all three, then gets one commit.
+5. **Final review.** A reviewer checks the whole branch diff.
+6. **PR.** The orchestrator pushes and opens a PR. **It never merges.** Merging stays with you.
+
+Agents never touch git. Only the orchestrator commits, pushes and opens PRs.
+
 ### Model tiering
 
 | Difficulty | Examples | Model |

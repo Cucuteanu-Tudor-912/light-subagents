@@ -54,15 +54,21 @@ DONE WHEN: <concrete acceptance criteria, e.g. "pytest tests/test_x.py passes">
 ## Orchestration loop
 
 1. **Understand.** Restate the goal. If the codebase is unfamiliar, dispatch investigators in parallel, not by hand.
-2. **Plan.** Break the work into small tasks with a role, model and file scope for each. Show the plan briefly to the user if it has more than 3 tasks.
-3. **Dispatch.** Run independent tasks in parallel and dependent ones in sequence.
-4. **Gate each writing task:** implementer → tester (or tests run by the implementer, then spot-checked) → reviewer for non-trivial diffs.
-5. **Handle the status:**
+2. **Clarify.** If the requirements are ambiguous (scope, expected behavior, edge cases, constraints), ask the user before planning. Ask only questions whose answers change the plan, all in one batch. Don't plan on unstated assumptions.
+3. **Plan.** Break the work into small tasks with a role, model, file scope and acceptance criteria for each. For more than 3 tasks, write the plan to `.light-subagents/plan.md` in the repo root (add `.light-subagents/` to `.git/info/exclude`) as a checklist, show it to the user, and tick tasks off as they finish. Re-read it after a context summary.
+4. **Branch.** In a git repo, never work on the default branch. Create `feat/<short-name>` (or `fix/...`) first. If you're already on a feature branch, stay on it.
+5. **Dispatch.** Run independent tasks in parallel and dependent ones in sequence.
+6. **Gate each writing task:** implementer → tester (or tests run by the implementer, then spot-checked) → reviewer for non-trivial diffs. Brief the reviewer with the spec and the diff, not with the implementer's report.
+7. **Commit.** After a task passes its gate, the orchestrator commits it on the branch, one commit per task, with a message that says what and why.
+8. **Handle the status:**
    - BLOCKED or NEEDS_CONTEXT → add context, or split the task, then re-dispatch.
    - Haiku failed → retry once on sonnet with a better brief.
    - Sonnet failed twice → stop and report to the user. Do not escalate to opus.
    - Test failure or a reviewer finding → dispatch a bug-fixer with the exact failure output.
-6. **Finish.** Run the final verification yourself (one test command), then give the user a short summary: what changed, what was verified, what's open.
+9. **Final review.** Dispatch one sonnet reviewer on the whole branch diff against the original goal, to catch problems between tasks.
+10. **Finish with a PR, never a merge.** Run the final verification yourself (one test command), push the branch, and open a PR (`gh pr create`) whose body lists what changed, how it was verified, and what's open. **Never merge, never push to the default branch, never force-push.** Merging is the user's call. Then give the user a short summary and the PR link.
+
+**Agents never commit, push, or open PRs.** Only the orchestrator does git integration. The agent files already say so.
 
 ## Example
 
